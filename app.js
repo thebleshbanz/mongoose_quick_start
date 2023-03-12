@@ -1,6 +1,7 @@
 // getting started 
 
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
+import Blog from "./model/Blog.js"
 
 main().catch(err => console.log(err));
 
@@ -8,25 +9,39 @@ async function main(){
     await mongoose.connect('mongodb+srv://ngs-myblog:NuDrRHtK7quS3Cpn@myblog.tfrtibr.mongodb.net/?retryWrites=true');
 }
 
-const kittySchema = new mongoose.Schema({
-    name: String
+// Create new Blog post object
+/* const article = new Blog({
+    title: "Awesome Post 1",
+    slug: "awesome-post-1",
+    published: true,
+    content: 'this is the best post 1 ever',
+    tags : ['featured', 'announcement'],
 });
 
-// NOTE: methods must be added to the schema before compiling it with mongoose.model()
-kittySchema.methods.speak = function speak(){
-    const greeting = this.name ? "Meaow name is " + this.name : "I don't have name";
-    console.log(greeting);
-}
+// Insert the article in out MongoDB database
+await article.save();
 
-const Kitten = mongoose.model('Kitten', kittySchema);
+// find Single blog post
+const firstArticle = await Blog.findOne({}); */
 
-const silence = new Kitten({ name : "Silence" });
-// console.log(silence.name);
+// Create new Blog post object - Alternative method
 
-/* const fluffy = new Kitten({name: 'manjuBilli'});
-fluffy.save();
-// Meaow name is fluffy
-fluffy.speak();  */
+/* const article = await Blog.create({
+    title: "Awesome Post 1",
+    slug: "awesome-post-1",
+    published: true,
+    content: 'this is the best post 1 ever',
+    tags : ['featured', 'announcement'],
+});
 
-const kittens = Kitten.find({ name : /^fluff/});
-console.log(kittens);
+article.title = "The Most Awesome post-5"
+article.save(); */
+
+// const article = await Blog.findById("640c7fb395d1f13d32a41395").exec();
+const article = await Blog.findById("640c7fb395d1f13d32a41395", "title slug content").exec();
+
+// const blog  = await Blog.deleteOne({title: "Awesome Post 1"}); // Delete single document which first matchedd
+// const blog  = await Blog.deleteMany({slug: "awesome-post-1"});
+
+
+console.log(article);

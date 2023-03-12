@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const Blog = require('./model/Blog');
+
 
 main().catch(err => console.log(err));
 
