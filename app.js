@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import Blog from "./model/Blog.js"
+import User from "./model/User.js"
 
 main().catch(err => console.log(err));
 
@@ -29,7 +30,7 @@ const firstArticle = await Blog.findOne({}); */
 /* const article = await Blog.create({
     title: "Awesome Post 1",
     slug: "awesome-post-1",
-    published: true,
+    author: "Ashish",
     content: 'this is the best post 1 ever',
     tags : ['featured', 'announcement'],
 });
@@ -38,10 +39,27 @@ article.title = "The Most Awesome post-5"
 article.save(); */
 
 // const article = await Blog.findById("640c7fb395d1f13d32a41395").exec();
-const article = await Blog.findById("640c7fb395d1f13d32a41395", "title slug content").exec();
+// const article = await Blog.findById("640c7fb395d1f13d32a41395", "title slug content").exec();
 
 // const blog  = await Blog.deleteOne({title: "Awesome Post 1"}); // Delete single document which first matchedd
 // const blog  = await Blog.deleteMany({slug: "awesome-post-1"});
 
+
+/**
+ * Create new User
+ */
+
+const user = await User.create({
+    name: 'Atiksh Banjare',
+    email : 'atiksh_banjare@gmail.com'
+});
+
+const article = await Blog.create({
+    title: "Awesome Post 3",
+    slug: "awesome-post-3",
+    author: user._id,
+    content: 'this is the best post 3 ever',
+    tags : ['featured', 'announcement'],
+});
 
 console.log(article);
